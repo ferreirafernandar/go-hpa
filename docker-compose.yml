@@ -1,0 +1,36 @@
+version: "3.7"
+services:
+  web:
+    container_name: web
+    image: ferreirafernandar/go-hpa:latest
+    build:
+      context: .
+      dockerfile: ./.docker/go/Dockerfile
+      target: prod
+    depends_on:
+      - "mysql"
+    networks:
+      - k8s-go-network
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+
+  busybox:
+    container_name: busybox
+    build:
+      context: ./.docker/busybox
+      dockerfile: Dockerfile
+    image: ferreirafernandar/hpa-getter:latest
+    depends_on:
+      - "web"
+    networks:
+      - k8s-go-network
+    environment:
+      - GO_SERVICE_URL=go-service
+      - GO_SERVICE_PORT=8000
+
+networks:
+  k8s-go-network:
+    driver: bridge
+    labels:
+     project.name: ${PROJECT_NAME}
