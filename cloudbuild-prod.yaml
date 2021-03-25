@@ -32,7 +32,7 @@ steps:
     entrypoint: 'bash'
     args:
       - '-c'
-      - 'sed s#$ferreirafernandar/${_REPOSITORY}:${SHORT_SHA}#g k8s/go/deployment.yml > k8s/go/deployment_prod.yml'
+      - 'sed s#${_USERNAME}/${_REPOSITORY}#:${_USERNAME}/${_REPOSITORY}:${SHORT_SHA}}#g k8s/go/deployment.yml > k8s/go/deployment_prod.yml'
       - 'cat k8s/go/deployment_prod.yml'
 
   - id: 'Deploy k8s'

@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: go
-          image: ferreirafernandar/go_web
+          image: ferreirafernandar/go-hpa
           ports:
             - containerPort: 8000
           resources:
