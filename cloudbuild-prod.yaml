@@ -26,3 +26,21 @@ steps:
     name: 'gcr.io/cloud-builders/docker'
     entrypoint: 'bash'
     args: ['-c', 'docker push ${_USERNAME}/${_REPOSITORY}:${SHORT_SHA}']
+    
+  - id: 'Adjust deployment'
+    name: 'gcr.io/cloud-builders/gcloud'
+    entrypoint: '/bin/sh'
+    args:
+      - '-c'
+      - 'sed s#${_USERNAME}/${_REPOSITORY}:${SHORT_SHA}#g k8s/go/deployment.yml > k8s/go/deployment_prod.yml'
+      - 'cat k8s/go/deployment_prod.yml'
+
+  - id: 'Deploy k8s'
+    name: 'gcr.io/cloud-builders/kubectl'
+    args:
+      - 'apply'
+      - '-f'
+      - 'k8s/go/deployment_prod.yml'
+    env:
+      - 'CLOUDSDK_COMPUTE_ZONE=us-central1-c'
+      - 'CLOUDSDK_CONTAINER_CLUSTER=go-hpa'
