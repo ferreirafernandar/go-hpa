@@ -20,9 +20,9 @@ steps:
   - id: 'Build image docker'  
     name: 'gcr.io/cloud-builders/docker'
     entrypoint: 'bash'
-    args: ['-c', 'docker build -t ${_USERNAME}/${_REPOSITORY}:${_TAG} -f .docker/go/Dockerfile .']
+    args: ['-c', 'docker build -t ${_USERNAME}/${_REPOSITORY}:${SHORT_SHA} -f .docker/go/Dockerfile .']
 
   - id: 'Push image docker'   
     name: 'gcr.io/cloud-builders/docker'
     entrypoint: 'bash'
-    args: ['-c', 'docker push ${_USERNAME}/${_REPOSITORY}:${_TAG}']
+    args: ['-c', 'docker push ${_USERNAME}/${_REPOSITORY}:${SHORT_SHA}']
