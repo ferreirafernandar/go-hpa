@@ -28,7 +28,7 @@ steps:
     args: ['-c', 'docker push ${_USERNAME}/${_REPOSITORY}:${SHORT_SHA}']
     
   - id: 'Adjust deployment'
-    name: 'gcr.io/cloud-builders/gcloud'
+    name: 'gcr.io/cloud-builders/docker'
     entrypoint: '/bin/sh'
     args:
       - '-c'
