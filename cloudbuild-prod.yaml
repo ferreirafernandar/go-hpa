@@ -29,7 +29,7 @@ steps:
     
   - id: 'Adjust deployment'
     name: 'gcr.io/cloud-builders/docker'
-    entrypoint: '/bin/sh'
+    entrypoint: 'bash'
     args:
       - '-c'
       - 'sed s#${_USERNAME}/${_REPOSITORY}:${SHORT_SHA}#g k8s/go/deployment.yml > k8s/go/deployment_prod.yml'
